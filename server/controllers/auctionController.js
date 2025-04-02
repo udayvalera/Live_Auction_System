@@ -26,7 +26,7 @@ const parseQueryOptions = (query) => {
 
 /**
  * @description Create a new auction
- * @route POST /api/v1/auctions
+ * @route POST /api/auctions
  * @access Private (Requires login)
  */
 const createAuction = async (req, res, next) => {
@@ -85,7 +85,7 @@ const createAuction = async (req, res, next) => {
     });
 
     await newAuction.save();
-    await newAuction.populate("seller", "fullName profilePictureUrl");
+    await newAuction.populate("seller", "name profilePictureUrl");
 
     res.status(201).json({
       success: true,
@@ -112,7 +112,7 @@ const createAuction = async (req, res, next) => {
 
 /**
  * @description Get list of auctions with filtering, sorting, pagination
- * @route GET /api/v1/auctions
+ * @route GET /api/auctions
  * @access Public
  */
 const listAuctions = async (req, res, next) => {
@@ -174,7 +174,7 @@ const listAuctions = async (req, res, next) => {
     // --- End Filtering ---
 
     const auctions = await Auction.find(filter)
-      .populate("seller", "fullName profilePictureUrl")
+      .populate("seller", "name profilePictureUrl")
       .sort(sortOptions)
       .skip(skip)
       .limit(limit);
@@ -196,7 +196,7 @@ const listAuctions = async (req, res, next) => {
 
 /**
  * @description Get single auction details by ID
- * @route GET /api/v1/auctions/:id
+ * @route GET /api/auctions/:id
  * @access Public
  */
 const getAuctionById = async (req, res, next) => {
@@ -210,8 +210,8 @@ const getAuctionById = async (req, res, next) => {
     }
 
     const auction = await Auction.findById(auctionId)
-      .populate("seller", "fullName profilePictureUrl email")
-      .populate("highestBidder", "fullName");
+      .populate("seller", "name profilePictureUrl email")
+      .populate("highestBidder", "name");
 
     if (!auction) {
       const error = new Error("Auction not found");
@@ -239,7 +239,7 @@ const getAuctionById = async (req, res, next) => {
 
 /**
  * @description Update an auction
- * @route PUT /api/v1/auctions/:id
+ * @route PUT /api/auctions/:id
  * @access Private (Auction Seller or Admin only)
  */
 const updateAuction = async (req, res, next) => {
@@ -336,8 +336,8 @@ const updateAuction = async (req, res, next) => {
     });
 
     await auction.save(); // Triggers validation
-    await auction.populate("seller", "fullName profilePictureUrl email");
-    await auction.populate("highestBidder", "fullName");
+    await auction.populate("seller", "name profilePictureUrl email");
+    await auction.populate("highestBidder", "name");
 
     res.status(200).json({
       success: true,
@@ -360,7 +360,7 @@ const updateAuction = async (req, res, next) => {
 
 /**
  * @description Delete an auction
- * @route DELETE /api/v1/auctions/:id
+ * @route DELETE /api/auctions/:id
  * @access Private (Auction Seller or Admin only)
  */
 const deleteAuction = async (req, res, next) => {
@@ -422,7 +422,7 @@ const deleteAuction = async (req, res, next) => {
 
 /**
  * @description Like or unlike an auction
- * @route PATCH /api/v1/auctions/:id/like
+ * @route PATCH /api/auctions/:id/like
  * @access Private (Requires login)
  */
 const toggleLikeAuction = async (req, res, next) => {
@@ -460,7 +460,7 @@ const toggleLikeAuction = async (req, res, next) => {
       auctionId,
       updateOperation,
       { new: true }
-    ).populate("seller", "fullName profilePictureUrl");
+    ).populate("seller", "name profilePictureUrl");
 
     res.status(200).json({
       success: true,
@@ -475,7 +475,7 @@ const toggleLikeAuction = async (req, res, next) => {
 
 /**
  * @description Get auctions created by the logged-in user
- * @route GET /api/v1/auctions/my-auctions
+ * @route GET /api/auctions/my-auctions
  * @access Private (Requires login)
  */
 const getMyAuctions = async (req, res, next) => {
@@ -503,8 +503,8 @@ const getMyAuctions = async (req, res, next) => {
     if (req.query.category) filter.category = req.query.category;
 
     const auctions = await Auction.find(filter)
-      .populate("seller", "fullName profilePictureUrl")
-      .populate("highestBidder", "fullName")
+      .populate("seller", "name profilePictureUrl")
+      .populate("highestBidder", "name")
       .sort(sortOptions)
       .skip(skip)
       .limit(limit);
@@ -526,7 +526,7 @@ const getMyAuctions = async (req, res, next) => {
 
 /**
  * @description Get auctions liked by the logged-in user
- * @route GET /api/v1/auctions/liked-auctions
+ * @route GET /api/auctions/liked-auctions
  * @access Private (Requires login)
  */
 const getLikedAuctions = async (req, res, next) => {
@@ -554,8 +554,8 @@ const getLikedAuctions = async (req, res, next) => {
     if (req.query.category) filter.category = req.query.category;
 
     const auctions = await Auction.find(filter)
-      .populate("seller", "fullName profilePictureUrl")
-      .populate("highestBidder", "fullName")
+      .populate("seller", "name profilePictureUrl")
+      .populate("highestBidder", "name")
       .sort(sortOptions)
       .skip(skip)
       .limit(limit);
