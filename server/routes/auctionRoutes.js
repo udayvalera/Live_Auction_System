@@ -23,13 +23,6 @@ const router = express.Router();
  */
 router.get("/", listAuctions);
 
-/**
- * @route   GET /api/v1/auctions/:id
- * @desc    Get single auction details by ID
- * @access  Public
- */
-router.get("/:id", getAuctionById);
-
 // --- Private Routes (Require Authentication) ---
 
 /**
@@ -38,6 +31,21 @@ router.get("/:id", getAuctionById);
  * @access  Private
  */
 router.post("/", protect, createAuction);
+
+/**
+ * @route   GET /api/v1/auctions/my-auctions
+ * @desc    Get auctions created by the logged-in user
+ * @access  Private
+ */
+// IMPORTANT: Place specific routes like '/my-auctions' BEFORE dynamic routes like '/:id'
+router.get("/my-auctions", protect, getMyAuctions);
+
+/**
+ * @route   GET /api/v1/auctions/:id
+ * @desc    Get single auction details by ID
+ * @access  Public
+ */
+router.get("/:id", getAuctionById);
 
 /**
  * @route   PUT /api/v1/auctions/:id
@@ -59,14 +67,6 @@ router.delete("/:id", protect, deleteAuction);
  * @access  Private
  */
 router.patch("/:id/like", protect, toggleLikeAuction);
-
-/**
- * @route   GET /api/v1/auctions/my-auctions
- * @desc    Get auctions created by the logged-in user
- * @access  Private
- */
-// IMPORTANT: Place specific routes like '/my-auctions' BEFORE dynamic routes like '/:id'
-router.get("/my-auctions", protect, getMyAuctions);
 
 /**
  * @route   GET /api/v1/auctions/liked-auctions

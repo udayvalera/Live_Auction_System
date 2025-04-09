@@ -186,8 +186,7 @@ const AuctionAnalytics: React.FC = () => {
             <nav className="-mb-px flex space-x-8" aria-label="Tabs">
               {[
                 { id: 'overview', label: 'Overview' },
-                { id: 'bids', label: 'Bid History' },
-                { id: 'traffic', label: 'Traffic' }
+                { id: 'bids', label: 'Bid History' }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -230,7 +229,7 @@ const AuctionAnalytics: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow">
+            {/* <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Listing Activity</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={auction.viewsOverTime}>
@@ -242,7 +241,7 @@ const AuctionAnalytics: React.FC = () => {
                   <Bar dataKey="views" fill="#8884d8" name="Page Views" />
                 </BarChart>
               </ResponsiveContainer>
-            </div>
+            </div> */}
             
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Auction Details</h3>
@@ -272,10 +271,6 @@ const AuctionAnalytics: React.FC = () => {
                     <div className="flex justify-between">
                       <dt className="text-sm font-medium text-gray-500">Current Bid</dt>
                       <dd className="text-sm text-gray-900">${auction.currentBid}</dd>
-                    </div>
-                    <div className="flex justify-between">
-                      <dt className="text-sm font-medium text-gray-500">Watchers</dt>
-                      <dd className="text-sm text-gray-900">{auction.watchCount}</dd>
                     </div>
                   </dl>
                 </div>

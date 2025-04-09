@@ -202,7 +202,7 @@ const listAuctions = async (req, res, next) => {
 const getAuctionById = async (req, res, next) => {
   try {
     const auctionId = req.params.id;
-
+    console.log(`getAuctionById called with ID: ${auctionId}`); // Debugging line
     if (!mongoose.Types.ObjectId.isValid(auctionId)) {
       const error = new Error("Invalid auction ID format");
       error.statusCode = 400;
@@ -479,6 +479,7 @@ const toggleLikeAuction = async (req, res, next) => {
  * @access Private (Requires login)
  */
 const getMyAuctions = async (req, res, next) => {
+  console.log("getMyAuctions called"); // Debugging line
   try {
     const { page, limit, skip, sortOptions } = parseQueryOptions(req.query);
     const sellerId = req.user.id;

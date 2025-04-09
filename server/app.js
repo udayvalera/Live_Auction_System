@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 // --- Routes ---
 const auctionRoutes = require("./routes/auctionRoutes");
 const authRoutes = require("./routes/authRoutes");
+const bidRoutes = require("./routes/bidRoutes"); // Assuming you have this route
 
 // --- Test Route ---
 app.get("/", (req, res) => {
@@ -24,7 +25,8 @@ app.get("/", (req, res) => {
 
 // --- API Routes ---
 app.use("/api/auth/", authRoutes);
-app.use("/api/auctions", auctionRoutes);
+app.use("/api/auctions/", auctionRoutes);
+app.use("/api/bids/", bidRoutes);
 
 // --- Start Server ---
 app.listen(PORT, () => {

@@ -124,7 +124,7 @@ const AuctionCard = ({ auction, index = 0 }: AuctionCardProps) => {
 
   return (
     // --- Use auction._id for the link ---
-    <Link to={`/auctions/${auction._id}`} className="block group">
+    <Link to={`/auction/${auction._id}`} className="block group">
       <div
         className="bg-white rounded-xl overflow-hidden border border-gray-100 transition-all duration-300 ease-in-out group-hover:shadow-lg group-hover:border-gray-200 auction-card-shadow animate-fade-in-up"
         style={{ animationDelay }}
